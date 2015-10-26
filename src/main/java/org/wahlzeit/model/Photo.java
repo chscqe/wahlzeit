@@ -67,6 +67,11 @@ public class Photo extends DataObject {
 	public static final int MAX_THUMB_PHOTO_WIDTH = 105;
 	public static final int MAX_THUMB_PHOTO_HEIGHT = 150;
 
+	/**
+	 *  The Coordinates where the Photo was taken
+	 */
+	public Coordinate location;
+	
 	protected PhotoId id = null;
 	
 	/**
@@ -121,6 +126,9 @@ public class Photo extends DataObject {
 	 * The default type is jpg
 	 */
 	protected String ending = "jpg";
+	
+	
+
 	
 	/**
 	 *

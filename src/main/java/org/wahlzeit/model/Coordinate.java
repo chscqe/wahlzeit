@@ -11,7 +11,7 @@ public class Coordinate {
 	}
 
 	public Coordinate getDistance(Coordinate other) {
-		return null;
+		return new Coordinate(Math.abs(latitude - other.latitude), Math.abs(longitude - other.longitude));
 	}
 	
 	public double getLatitudinalDistance(Coordinate other)	{
