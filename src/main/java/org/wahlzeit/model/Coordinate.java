@@ -15,10 +15,10 @@ public class Coordinate {
 	}
 	
 	public double getLatitudinalDistance(Coordinate other)	{
-		return 0.0;
+		return Math.abs(latitude - other.latitude) * 6371.0;
 	}
 	
 	public double getLongitudinalDistance(Coordinate other) {
-		return 0.0;
+		return Math.abs(longitude - other.longitude) * 6371.0;
 	}
 }
