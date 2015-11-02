@@ -70,7 +70,7 @@ public class Photo extends DataObject {
 	/**
 	 *  The Coordinates where the Photo was taken
 	 */
-	public Coordinate location;
+	public Location location;
 	
 	protected PhotoId id = null;
 	

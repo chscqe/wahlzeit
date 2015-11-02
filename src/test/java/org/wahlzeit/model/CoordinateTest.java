@@ -13,14 +13,14 @@ public class CoordinateTest {
 	
 	@Test
 	public void coordDistanceTest1() {
-		assertEquals(a.getDistance(b).getLatitude(), 108.5, 0.01);
-		assertEquals(a.getDistance(b).getLongitude(), 30.3, 0.01);
+		assertEquals(a.getDistance(b), 108.5, 0.01);
+		assertEquals(a.getDistance(b), 30.3, 0.01);
 	}
 	
 	@Test
 	public void coordDistanceTest2() {
-		assertEquals(c.getDistance(d).getLatitude(), 150.2, 0.01);
-		assertEquals(c.getDistance(d).getLongitude(), 106.4, 0.01);
+		assertEquals(c.getDistance(d), 150.2, 0.01);
+		assertEquals(c.getDistance(d), 106.4, 0.01);
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
