@@ -55,7 +55,7 @@ public class PhotoManager extends ObjectManager {
 	/**
 	 * In-memory cache for photos
 	 */
-	protected Map<PhotoId, WindowPhoto> photoCache = new HashMap<PhotoId, WindowPhoto>();
+	protected Map<PhotoId, Photo> photoCache = new HashMap<PhotoId, Photo>();
 
 	/**
 	 *
@@ -105,7 +105,7 @@ public class PhotoManager extends ObjectManager {
 			return null;
 		}
 
-		WindowPhoto result = doGetPhotoFromId(id);
+		WindowPhoto result = (WindowPhoto) doGetPhotoFromId(id);
 
 		if (result == null) {
 			result = PhotoFactory.getInstance().loadPhoto(id);
@@ -121,7 +121,7 @@ public class PhotoManager extends ObjectManager {
 	 * @methodtype get
 	 * @methodproperties primitive
 	 */
-	protected WindowPhoto doGetPhotoFromId(PhotoId id) {
+	protected Photo doGetPhotoFromId(PhotoId id) {
 		return photoCache.get(id);
 	}
 
@@ -307,7 +307,7 @@ public class PhotoManager extends ObjectManager {
 	/**
 	 * @methodtype get
 	 */
-	public Map<PhotoId, WindowPhoto> getPhotoCache() {
+	public Map<PhotoId, Photo> getPhotoCache() {
 		return photoCache;
 	}
 
