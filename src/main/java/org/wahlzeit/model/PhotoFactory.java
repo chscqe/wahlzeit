@@ -76,21 +76,21 @@ public class PhotoFactory {
 	 * @methodtype factory
 	 */
 	public Photo createPhoto() {
-		return new Photo();
+		return new WindowPhoto();
 	}
 
 	/**
 	 * Creates a new photo with the specified id
 	 */
-	public Photo createPhoto(PhotoId id) {
-		return new Photo(id);
+	public WindowPhoto createPhoto(PhotoId id) {
+		return new WindowPhoto(id);
 	}
 
 	/**
 	 * Loads a photo. The Java object is loaded from the Google Datastore, the Images in all sizes are loaded from the
 	 * Google Cloud storage.
 	 */
-	public Photo loadPhoto(PhotoId id) {
+	public WindowPhoto loadPhoto(PhotoId id) {
 	   /* Photo result =
                 OfyService.ofy().load().type(Photo.class).ancestor(KeyFactory.createKey("Application", "Wahlzeit")).filter(Photo.ID, id).first().now();
         for (PhotoSize size : PhotoSize.values()) {
