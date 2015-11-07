@@ -1,40 +1,76 @@
 package org.wahlzeit.model;
 
-public class CartesianCoordinate {
+public class CartesianCoordinate implements Coordinate{
 
-	private double latitude;
-	private double longitude;
+	private double x;
+	private double y;
+	private double z;
 	
-	public CartesianCoordinate(double lati, double longi) {
-		latitude = lati;
-		longitude = longi;
+	public CartesianCoordinate(double x, double y, double z) {
+		this.x = x;
+		this.y = y;
+		this.z = z;
 	}
-
-	public double getDistance(CartesianCoordinate other) {
+	
+	@Override
+	public double getDistance(Coordinate other) {
 		if(other == null) {
 			throw new IllegalArgumentException();
 		}
-		double deltaX = Math.cos(other.getLongitude())*Math.cos(other.getLatitude()) - Math.cos(getLongitude()) * Math.cos(getLatitude());
-		double deltaY = Math.cos(other.getLongitude())*Math.sin(other.getLatitude()) - Math.cos(getLongitude()) * Math.sin(getLatitude());
-		double deltaZ = Math.sin(other.getLongitude()) - Math.sin(getLongitude());
-		double C = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
-		double deltaSig = 2.0 * Math.asin(C / 2.0);
-		return 6371.0 * deltaSig;
+		if(!(other instanceof CartesianCoordinate)) {
+			throw new IllegalArgumentException();
+		}
+		CartesianCoordinate c = (CartesianCoordinate) other;
+		double distX = getXDistance(c);
+		double distY = getYDistance(c);
+		double distZ = getZDistance(c);
+		return Math.sqrt(distX*distX + distY*distY + distZ*distZ);
 	}
 	
-	public double getLatitudinalDistance(CartesianCoordinate other)	{
-		return Math.abs(latitude - other.getLatitude());
+	public double getXDistance(CartesianCoordinate other)	{
+		return Math.abs(x - other.getX());
 	}
 	
-	public double getLongitudinalDistance(CartesianCoordinate other) {
-		return Math.abs(longitude - other.getLongitude());
+	public double getYDistance(CartesianCoordinate other) {
+		return Math.abs(y - other.getY());
 	}
 	
-	public double getLongitude() {
-		return longitude;
+	public double getZDistance(CartesianCoordinate other) {
+		return Math.abs(z - other.getZ());
 	}
 	
-	public double getLatitude() {
-		return latitude;
+	public double getX() {
+		return x;
+	}
+	
+	public double getY() {
+		return y;
+	}
+	
+	public double getZ() {
+		return z;
+	}
+	
+	public void setX(double x) {
+		this.x = x;
+	}
+	
+	public void setY(double y) {
+		this.y = y;
+	}
+	
+	public void setZ(double z) {
+		this.z = z;
+	}
+
+	@Override
+	public boolean isEqual(Coordinate other) {
+		if(other instanceof CartesianCoordinate) {
+			CartesianCoordinate c = (CartesianCoordinate) other;
+			if(this.getX() == c.getX() && this.getY() == c.getY() && this.getZ() == c.getZ()){
+				return true;
+			}
+		}
+		return false;
 	}
 }

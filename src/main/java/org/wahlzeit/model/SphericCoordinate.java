@@ -5,9 +5,9 @@ public class SphericCoordinate implements Coordinate{
 	private double latitude;
 	private double longitude;
 	
-	public SphericCoordinate(double lati, double longi) {
-		latitude = lati;
-		longitude = longi;
+	public SphericCoordinate(double latitude, double longitude) {
+		this.latitude = latitude;
+		this.longitude = longitude;
 	}
 
 	@Override
