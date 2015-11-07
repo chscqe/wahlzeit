@@ -11,8 +11,10 @@ public class SphericCoordinateTest {
 	private SphericCoordinate c = new SphericCoordinate(-60.2, 103.9);
 	private SphericCoordinate d = new SphericCoordinate(90.0, -2.5);
 	
+	private CartesianCoordinate ill = new CartesianCoordinate(1204.54, 459.99, 71.4);
+	
 	@Test
-	public void coordDistanceTest1() {
+	public void coordDistanceTest() {
 		assertEquals(a.getDistance(b), 12003.62, 0.01);
 		assertEquals(a.getDistance(c), 8180.66, 0.01);
 		assertEquals(a.getDistance(d), 7118.37, 0.01);
@@ -27,22 +29,20 @@ public class SphericCoordinateTest {
 	}
 	
 	@Test
-	public void distanceLatiTest1() {
-		assertEquals(a.getLatitudinalDistance(c), 102.5, 0.01);
+	public void distanceLatiTest() {
+		assertEquals(a.getLatitudinalDistance(c), 102.50, 0.01);
+		assertEquals(b.getLatitudinalDistance(d), 156.20, 0.01);
 	}
 	
-	@Test
-	public void distanceLatiTest2() {
-		assertEquals(b.getLatitudinalDistance(d), 156.2, 0.01);
-	}
 	
 	@Test
-	public void distanceLongiTest1() {
-		assertEquals(a.getLongitudinalDistance(d), 53.1, 0.01);
+	public void distanceLongiTest() {
+		assertEquals(a.getLongitudinalDistance(d), 53.10, 0.01);
+		assertEquals(b.getLongitudinalDistance(c), 23.00, 0.01);
 	}
 	
-	@Test
-	public void distanceLongiTest2() {
-		assertEquals(b.getLongitudinalDistance(c), 23.0, 0.01);
+	@Test (expected = IllegalArgumentException.class)
+	public void illegalTypesTest() {
+		b.getDistance(ill);
 	}
 }
