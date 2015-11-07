@@ -4,10 +4,12 @@ public class SphericCoordinate implements Coordinate{
 
 	private double latitude;
 	private double longitude;
+	private double radius;
 	
-	public SphericCoordinate(double latitude, double longitude) {
+	public SphericCoordinate(double latitude, double longitude, double radius) {
 		this.latitude = latitude;
 		this.longitude = longitude;
+		this.radius = radius;
 	}
 
 	@Override
@@ -24,7 +26,7 @@ public class SphericCoordinate implements Coordinate{
 		double deltaZ = Math.sin(c.getLongitude()) - Math.sin(getLongitude());
 		double C = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
 		double deltaSig = 2.0 * Math.asin(C / 2.0);
-		return 6371.0 * deltaSig;
+		return radius * deltaSig;
 	}
 	
 	public double getLatitudinalDistance(SphericCoordinate other)	{
@@ -39,6 +41,10 @@ public class SphericCoordinate implements Coordinate{
 		return longitude;
 	}
 	
+	public double getRadius() {
+		return radius;
+	}
+	
 	public double getLatitude() {
 		return latitude;
 	}
@@ -50,12 +56,16 @@ public class SphericCoordinate implements Coordinate{
 	public void setLatitude(double la) {
 		this.latitude = la;
 	}
+	
+	public void setRadius (double r) {
+		this.radius = r;
+	}
 
 	@Override
 	public boolean isEqual(Coordinate other) {
 		if(other instanceof SphericCoordinate) {
 			SphericCoordinate s = (SphericCoordinate) other;
-			if(this.getLatitude() == s.getLatitude() && this.getLongitude() == s.getLongitude()){
+			if(this.getLatitude() == s.getLatitude() && this.getLongitude() == s.getLongitude() && this.getRadius() == s.getRadius()){
 				return true;
 			}
 		}

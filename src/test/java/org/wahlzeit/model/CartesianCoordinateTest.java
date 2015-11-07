@@ -1,17 +1,33 @@
 package org.wahlzeit.model;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class CartesianCoordinateTest {
 
-	private CartesianCoordinate a = new CartesianCoordinate(22.8, 12.4, 80.9);
-	private CartesianCoordinate b = new CartesianCoordinate(200.6, 7.3, 99.1);
-	private CartesianCoordinate c = new CartesianCoordinate(8.0, 104.33, 42.9);
-	private CartesianCoordinate d = new CartesianCoordinate(1204.54, 459.99, 71.4);
+	private CartesianCoordinate a;
+	private CartesianCoordinate b;
+	private CartesianCoordinate c;
+	private CartesianCoordinate d;
 	
-	private SphericCoordinate ill = new SphericCoordinate(90.0, -2.5);
+	private CartesianCoordinate mirrorA;
+	
+	private SphericCoordinate ill;
+	
+	@Before
+	public void setUp() {
+		a = new CartesianCoordinate(22.8, 12.4, 80.9);
+		b = new CartesianCoordinate(200.6, 7.3, 99.1);
+		c = new CartesianCoordinate(8.0, 104.33, 42.9);
+		d = new CartesianCoordinate(1204.54, 459.99, 71.4);	
+		mirrorA = new CartesianCoordinate(22.8, 12.4, 80.9);	
+		ill = new SphericCoordinate(90.0, -2.5, 6371.0);
+	}
+	
 	
 	@Test
 	public void coordDistanceTest() {
@@ -49,5 +65,12 @@ public class CartesianCoordinateTest {
 	@Test (expected = IllegalArgumentException.class)
 	public void illegalTypesTest() {
 		b.getDistance(ill);
+	}
+	
+	@Test
+	public void isEqualTest() {
+		assertFalse(c.isEqual(a));
+		assertTrue(a.isEqual(a));
+		assertTrue(a.isEqual(mirrorA));
 	}
 }
