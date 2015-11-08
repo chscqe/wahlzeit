@@ -14,16 +14,19 @@ public class SphericCoordinate implements Coordinate{
 
 	@Override
 	public double getDistance(Coordinate other) {
-		if(other == null) {
+		SphericCoordinate s;
+		if(other instanceof CartesianCoordinate) {
+			s = convertToSpheric((CartesianCoordinate)other);
+		}
+		else if(other instanceof SphericCoordinate){
+			s = (SphericCoordinate) other;
+		}	
+		else {
 			throw new IllegalArgumentException();
 		}
-		if(!(other instanceof SphericCoordinate)){
-			throw new IllegalArgumentException();
-		}
-		SphericCoordinate c = (SphericCoordinate) other;
-		double deltaX = Math.cos(c.getLongitude())*Math.cos(c.getLatitude()) - Math.cos(getLongitude()) * Math.cos(getLatitude());
-		double deltaY = Math.cos(c.getLongitude())*Math.sin(c.getLatitude()) - Math.cos(getLongitude()) * Math.sin(getLatitude());
-		double deltaZ = Math.sin(c.getLongitude()) - Math.sin(getLongitude());
+		double deltaX = Math.cos(s.getLongitude())*Math.cos(s.getLatitude()) - Math.cos(getLongitude()) * Math.cos(getLatitude());
+		double deltaY = Math.cos(s.getLongitude())*Math.sin(s.getLatitude()) - Math.cos(getLongitude()) * Math.sin(getLatitude());
+		double deltaZ = Math.sin(s.getLongitude()) - Math.sin(getLongitude());
 		double C = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
 		double deltaSig = 2.0 * Math.asin(C / 2.0);
 		return radius * deltaSig;
@@ -63,12 +66,26 @@ public class SphericCoordinate implements Coordinate{
 
 	@Override
 	public boolean isEqual(Coordinate other) {
+		SphericCoordinate s;
 		if(other instanceof SphericCoordinate) {
-			SphericCoordinate s = (SphericCoordinate) other;
+			s = (SphericCoordinate) other;
 			if(this.getLatitude() == s.getLatitude() && this.getLongitude() == s.getLongitude() && this.getRadius() == s.getRadius()){
 				return true;
 			}
+		} else if(other instanceof CartesianCoordinate) {
+			s = convertToSpheric((CartesianCoordinate) other);
+			if(this.getLatitude() == s.getLatitude() && this.getLongitude() == s.getLongitude() && this.getRadius() == s.getRadius()){
+				return true;
+			}	
 		}
 		return false;
+	}
+	
+	private SphericCoordinate convertToSpheric(CartesianCoordinate c) {
+		double radius = Math.sqrt(c.getX()*c.getX() + c.getY()*c.getY() + c.getZ()*c.getZ());
+		double latitude = Math.asin(c.getZ() / radius);
+		double longitude = Math.atan2(c.getY(), c.getX());
+		SphericCoordinate s = new SphericCoordinate(latitude, longitude, radius);
+		return s;
 	}
 }
