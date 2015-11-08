@@ -14,13 +14,16 @@ public class CartesianCoordinate implements Coordinate{
 	
 	@Override
 	public double getDistance(Coordinate other) {
-		if(other == null) {
+		CartesianCoordinate c;
+		if(other instanceof SphericCoordinate) {
+			c = convertToCartesian((SphericCoordinate)other);
+		}
+		else if(other instanceof CartesianCoordinate){
+			c = (CartesianCoordinate) other;
+		}	
+		else {
 			throw new IllegalArgumentException();
 		}
-		if(!(other instanceof CartesianCoordinate)) {
-			throw new IllegalArgumentException();
-		}
-		CartesianCoordinate c = (CartesianCoordinate) other;
 		double distX = getXDistance(c);
 		double distY = getYDistance(c);
 		double distZ = getZDistance(c);
@@ -65,12 +68,27 @@ public class CartesianCoordinate implements Coordinate{
 
 	@Override
 	public boolean isEqual(Coordinate other) {
+		CartesianCoordinate c;
 		if(other instanceof CartesianCoordinate) {
-			CartesianCoordinate c = (CartesianCoordinate) other;
+			c = (CartesianCoordinate) other;
 			if(this.getX() == c.getX() && this.getY() == c.getY() && this.getZ() == c.getZ()){
 				return true;
 			}
 		}
+		else if(other instanceof SphericCoordinate) {
+			c = convertToCartesian((SphericCoordinate) other);
+			if(this.getX() == c.getX() && this.getY() == c.getY() && this.getZ() == c.getZ()){
+				return true;
+			}	
+		}
 		return false;
+	}
+	
+	private CartesianCoordinate convertToCartesian(SphericCoordinate s) {
+		double x = s.getRadius() * Math.cos(s.getLatitude()) * Math.cos(s.getLongitude());
+		double y = s.getRadius() * Math.cos(s.getLatitude()) * Math.sin(s.getLongitude());
+		double z = s.getRadius() * Math.sin(s.getLatitude());
+		CartesianCoordinate c = new CartesianCoordinate(x, y, z);
+		return c;
 	}
 }
