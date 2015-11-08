@@ -1,7 +1,5 @@
 package org.wahlzeit.model;
 
-import static org.junit.Assert.assertTrue;
-
 public class CartesianCoordinate implements Coordinate{
 
 	private double x;

@@ -63,11 +63,15 @@ public class CartesianCoordinateTest {
 	}
 	
 	@Test
+	public void mixedCoordsDistanceTest() {
+		assertEquals(a.getDistance(equA), 0.0, 0.01);
+	}
+	
+	@Test
 	public void isEqualTest() {
 		assertFalse(c.isEqual(a));
 		assertTrue(a.isEqual(a));
 		assertTrue(a.isEqual(mirrorA));
-		System.out.println(Math.atan2(12.4, 22.8));
 		assertTrue(a.isEqual(equA));
 	}
 }

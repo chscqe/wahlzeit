@@ -55,6 +55,11 @@ public class SphericCoordinateTest {
 	}
 	
 	@Test
+	public void mixedCoordsDistanceTest() {
+		assertEquals(a.getDistance(equA), 0.0, 0.01);
+	}
+	
+	@Test
 	public void isEqualTest() {
 		assertFalse(c.isEqual(a));
 		assertTrue(a.isEqual(a));

@@ -85,7 +85,7 @@ public class SphericCoordinate implements Coordinate{
 	
 	private SphericCoordinate convertToSpheric(CartesianCoordinate c) {
 		double cRadius = Math.sqrt(c.getX()*c.getX() + c.getY()*c.getY() + c.getZ()*c.getZ());
-		double cLatitude = Math.asin(c.getZ() / radius);
+		double cLatitude = Math.asin(c.getZ() / cRadius);
 		double cLongitude = Math.atan2(c.getY(), c.getX());
 		SphericCoordinate s = new SphericCoordinate(cLatitude, cLongitude, cRadius);
 		return s;
