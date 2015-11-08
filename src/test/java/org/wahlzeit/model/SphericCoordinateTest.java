@@ -14,7 +14,7 @@ public class SphericCoordinateTest {
 	
 	private SphericCoordinate mirrorA;
 	
-	private CartesianCoordinate ill;	
+	private CartesianCoordinate equA;	
 	
 	@Before
 	public void setUp() {
@@ -23,7 +23,7 @@ public class SphericCoordinateTest {
 		c = new SphericCoordinate(-60.2, 103.9, 6371.0);
 		d = new SphericCoordinate(90.0, -2.5, 6371.0);		
 		mirrorA = new SphericCoordinate(42.3, 50.6, 6371.0);		
-		ill = new CartesianCoordinate(1204.54, 459.99, 71.4);	
+		equA = new CartesianCoordinate(6371.0 * Math.cos(42.3) * Math.cos(50.6), 6371.0 * Math.cos(42.3) * Math.sin(50.6), 6371.0 * Math.sin(42.3));	
 	}
 	
 	@Test
@@ -54,15 +54,11 @@ public class SphericCoordinateTest {
 		assertEquals(b.getLongitudinalDistance(c), 23.00, 0.01);
 	}
 	
-	@Test (expected = IllegalArgumentException.class)
-	public void illegalTypesTest() {
-		b.getDistance(ill);
-	}
-	
 	@Test
 	public void isEqualTest() {
 		assertFalse(c.isEqual(a));
 		assertTrue(a.isEqual(a));
 		assertTrue(a.isEqual(mirrorA));
+		assertTrue(a.isEqual(equA));
 	}
 }

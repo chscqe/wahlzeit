@@ -6,6 +6,8 @@ public class SphericCoordinate implements Coordinate{
 	private double longitude;
 	private double radius;
 	
+	private static final double EPSILON = 0.01;
+	
 	public SphericCoordinate(double latitude, double longitude, double radius) {
 		this.latitude = latitude;
 		this.longitude = longitude;
@@ -69,12 +71,12 @@ public class SphericCoordinate implements Coordinate{
 		SphericCoordinate s;
 		if(other instanceof SphericCoordinate) {
 			s = (SphericCoordinate) other;
-			if(this.getLatitude() == s.getLatitude() && this.getLongitude() == s.getLongitude() && this.getRadius() == s.getRadius()){
+			if(Math.abs(this.getLatitude() - s.getLatitude()) < EPSILON && Math.abs(this.getLongitude() - s.getLongitude()) < EPSILON && Math.abs(this.getRadius() - s.getRadius()) < EPSILON){
 				return true;
 			}
 		} else if(other instanceof CartesianCoordinate) {
 			s = convertToSpheric((CartesianCoordinate) other);
-			if(this.getLatitude() == s.getLatitude() && this.getLongitude() == s.getLongitude() && this.getRadius() == s.getRadius()){
+			if(Math.abs(this.getLatitude() - s.getLatitude()) < EPSILON && Math.abs(this.getLongitude() - s.getLongitude()) < EPSILON && Math.abs(this.getRadius() - s.getRadius()) <EPSILON){
 				return true;
 			}	
 		}
@@ -82,10 +84,10 @@ public class SphericCoordinate implements Coordinate{
 	}
 	
 	private SphericCoordinate convertToSpheric(CartesianCoordinate c) {
-		double radius = Math.sqrt(c.getX()*c.getX() + c.getY()*c.getY() + c.getZ()*c.getZ());
-		double latitude = Math.asin(c.getZ() / radius);
-		double longitude = Math.atan2(c.getY(), c.getX());
-		SphericCoordinate s = new SphericCoordinate(latitude, longitude, radius);
+		double cRadius = Math.sqrt(c.getX()*c.getX() + c.getY()*c.getY() + c.getZ()*c.getZ());
+		double cLatitude = Math.asin(c.getZ() / radius);
+		double cLongitude = Math.atan2(c.getY(), c.getX());
+		SphericCoordinate s = new SphericCoordinate(cLatitude, cLongitude, cRadius);
 		return s;
 	}
 }

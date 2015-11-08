@@ -1,10 +1,14 @@
 package org.wahlzeit.model;
 
+import static org.junit.Assert.assertTrue;
+
 public class CartesianCoordinate implements Coordinate{
 
 	private double x;
 	private double y;
 	private double z;
+	
+	private static final double EPSILON = 0.01;
 	
 	public CartesianCoordinate(double x, double y, double z) {
 		this.x = x;
@@ -71,13 +75,13 @@ public class CartesianCoordinate implements Coordinate{
 		CartesianCoordinate c;
 		if(other instanceof CartesianCoordinate) {
 			c = (CartesianCoordinate) other;
-			if(this.getX() == c.getX() && this.getY() == c.getY() && this.getZ() == c.getZ()){
+			if(Math.abs(this.getX() - c.getX()) < EPSILON && Math.abs(this.getY() - c.getY()) < EPSILON && Math.abs(this.getZ() - c.getZ()) < EPSILON){
 				return true;
 			}
 		}
 		else if(other instanceof SphericCoordinate) {
 			c = convertToCartesian((SphericCoordinate) other);
-			if(this.getX() == c.getX() && this.getY() == c.getY() && this.getZ() == c.getZ()){
+			if(Math.abs(this.getX() - c.getX()) < EPSILON && Math.abs(this.getY() - c.getY()) < EPSILON && Math.abs(this.getZ() - c.getZ()) < EPSILON){
 				return true;
 			}	
 		}
@@ -85,10 +89,10 @@ public class CartesianCoordinate implements Coordinate{
 	}
 	
 	private CartesianCoordinate convertToCartesian(SphericCoordinate s) {
-		double x = s.getRadius() * Math.cos(s.getLatitude()) * Math.cos(s.getLongitude());
-		double y = s.getRadius() * Math.cos(s.getLatitude()) * Math.sin(s.getLongitude());
-		double z = s.getRadius() * Math.sin(s.getLatitude());
-		CartesianCoordinate c = new CartesianCoordinate(x, y, z);
+		double cX = s.getRadius() * Math.cos(s.getLatitude()) * Math.cos(s.getLongitude());
+		double cY = s.getRadius() * Math.cos(s.getLatitude()) * Math.sin(s.getLongitude());
+		double cZ = s.getRadius() * Math.sin(s.getLatitude());
+		CartesianCoordinate c = new CartesianCoordinate(cX, cY, cZ);
 		return c;
 	}
 }

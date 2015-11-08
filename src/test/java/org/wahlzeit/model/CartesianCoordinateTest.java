@@ -16,7 +16,7 @@ public class CartesianCoordinateTest {
 	
 	private CartesianCoordinate mirrorA;
 	
-	private SphericCoordinate ill;
+	private SphericCoordinate equA;
 	
 	@Before
 	public void setUp() {
@@ -25,7 +25,7 @@ public class CartesianCoordinateTest {
 		c = new CartesianCoordinate(8.0, 104.33, 42.9);
 		d = new CartesianCoordinate(1204.54, 459.99, 71.4);	
 		mirrorA = new CartesianCoordinate(22.8, 12.4, 80.9);	
-		ill = new SphericCoordinate(90.0, -2.5, 6371.0);
+		equA = new SphericCoordinate(Math.asin(80.9/(22.8*22.8 + 12.4*12.4 + 80.9*80.9)), Math.atan2(12.4,22.8), Math.sqrt(22.8*22.8 + 12.4*12.4 + 80.9*80.9));
 	}
 	
 	
@@ -62,15 +62,12 @@ public class CartesianCoordinateTest {
 		assertEquals(c.getZDistance(d), 28.50, 0.01);
 	}
 	
-	@Test (expected = IllegalArgumentException.class)
-	public void illegalTypesTest() {
-		b.getDistance(ill);
-	}
-	
 	@Test
 	public void isEqualTest() {
 		assertFalse(c.isEqual(a));
 		assertTrue(a.isEqual(a));
 		assertTrue(a.isEqual(mirrorA));
+		System.out.println(Math.atan2(12.4, 22.8));
+		assertTrue(a.isEqual(equA));
 	}
 }
