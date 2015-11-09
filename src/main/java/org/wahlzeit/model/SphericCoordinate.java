@@ -26,8 +26,8 @@ public class SphericCoordinate implements Coordinate{
 		else {
 			throw new IllegalArgumentException();
 		}
-		double deltaX = Math.cos(s.getLongitude())*Math.cos(s.getLatitude()) - Math.cos(getLongitude()) * Math.cos(getLatitude());
-		double deltaY = Math.cos(s.getLongitude())*Math.sin(s.getLatitude()) - Math.cos(getLongitude()) * Math.sin(getLatitude());
+		double deltaX = Math.cos(s.getLongitude())* Math.cos(s.getLatitude()) - Math.cos(getLongitude()) * Math.cos(getLatitude());
+		double deltaY = Math.cos(s.getLongitude())* Math.sin(s.getLatitude()) - Math.cos(getLongitude()) * Math.sin(getLatitude());
 		double deltaZ = Math.sin(s.getLongitude()) - Math.sin(getLongitude());
 		double C = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
 		double deltaSig = 2.0 * Math.asin(C / 2.0);
