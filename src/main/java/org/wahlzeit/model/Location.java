@@ -1,9 +1,12 @@
 package org.wahlzeit.model;
 
+import com.googlecode.objectify.annotation.Container;
+
 public class Location {
 	
 	private String name;
 
+	@Container
 	public SphericCoordinate coordinate;
 	
 	public Location() {
