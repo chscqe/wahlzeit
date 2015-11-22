@@ -16,6 +16,8 @@ public class SphericCoordinate extends AbstractCoordinate{
 
 	@Override
 	public double getDistance(Coordinate other) {
+		//precondition
+		assertNotNull(other);
 		SphericCoordinate s;
 		if(other instanceof CartesianCoordinate) {
 			s = convertToSpheric((CartesianCoordinate)other);
@@ -26,11 +28,16 @@ public class SphericCoordinate extends AbstractCoordinate{
 		else {
 			throw new IllegalArgumentException();
 		}
+		//precondition
+		assertCoordinatesLegal(s.getLatitude(), s.getLongitude(), s.getRadius());
 		double deltaX = Math.cos(s.getLongitude())* Math.cos(s.getLatitude()) - Math.cos(getLongitude()) * Math.cos(getLatitude());
 		double deltaY = Math.cos(s.getLongitude())* Math.sin(s.getLatitude()) - Math.cos(getLongitude()) * Math.sin(getLatitude());
 		double deltaZ = Math.sin(s.getLongitude()) - Math.sin(getLongitude());
 		double C = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
 		double deltaSig = 2.0 * Math.asin(C / 2.0);
+		//postcondition
+		assertNotNull(other);
+		assertCoordinatesLegal(s.getLatitude(), s.getLongitude(), s.getRadius());
 		return radius * deltaSig;
 	}
 	
@@ -68,18 +75,33 @@ public class SphericCoordinate extends AbstractCoordinate{
 
 	@Override
 	public boolean isEqual(Coordinate other) {
+		//precondition
+		assertNotNull(other);
 		SphericCoordinate s;
 		if(other instanceof SphericCoordinate) {
 			s = (SphericCoordinate) other;
+			//precondition
+			assertNotNull(other);
+			assertCoordinatesLegal(s.getLatitude(), s.getLongitude(), s.getRadius());
 			if(Math.abs(this.getLatitude() - s.getLatitude()) < EPSILON && Math.abs(this.getLongitude() - s.getLongitude()) < EPSILON && Math.abs(this.getRadius() - s.getRadius()) < EPSILON){
+				//postcondition
+				assertNotNull(other);
+				assertCoordinatesLegal(s.getLatitude(), s.getLongitude(), s.getRadius());
 				return true;
 			}
 		} else if(other instanceof CartesianCoordinate) {
 			s = convertToSpheric((CartesianCoordinate) other);
+			//precondition
+			assertCoordinatesLegal(s.getLatitude(), s.getLongitude(), s.getRadius());
 			if(Math.abs(this.getLatitude() - s.getLatitude()) < EPSILON && Math.abs(this.getLongitude() - s.getLongitude()) < EPSILON && Math.abs(this.getRadius() - s.getRadius()) <EPSILON){
+				//postcondition
+				assertNotNull(other);
+				assertCoordinatesLegal(s.getLatitude(), s.getLongitude(), s.getRadius());
 				return true;
 			}	
 		}
+		//postcondition
+		assertNotNull(other);
 		return false;
 	}
 	

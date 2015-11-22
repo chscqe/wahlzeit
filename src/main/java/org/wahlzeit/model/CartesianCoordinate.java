@@ -16,6 +16,8 @@ public class CartesianCoordinate extends AbstractCoordinate{
 	
 	@Override
 	public double getDistance(Coordinate other) {
+		//precondition
+		assertNotNull(other);
 		CartesianCoordinate c;
 		if(other instanceof SphericCoordinate) {
 			c = convertToCartesian((SphericCoordinate)other);
@@ -26,9 +28,14 @@ public class CartesianCoordinate extends AbstractCoordinate{
 		else {
 			throw new IllegalArgumentException();
 		}
+		//precondition
+		assertCoordinatesLegal(c.getX(), c.getY(), c.getZ());
 		double distX = getXDistance(c);
 		double distY = getYDistance(c);
 		double distZ = getZDistance(c);
+		//postcondition
+		assertNotNull(other);
+		assertCoordinatesLegal(c.getX(), c.getY(), c.getZ());
 		return Math.sqrt(distX*distX + distY*distY + distZ*distZ);
 	}
 	
@@ -70,19 +77,35 @@ public class CartesianCoordinate extends AbstractCoordinate{
 
 	@Override
 	public boolean isEqual(Coordinate other) {
+		
+		//precondition
+		assertNotNull(other);
+		
 		CartesianCoordinate c;
 		if(other instanceof CartesianCoordinate) {
 			c = (CartesianCoordinate) other;
+			//precondition
+			assertCoordinatesLegal(c.getX(), c.getY(), c.getZ());
 			if(Math.abs(this.getX() - c.getX()) < EPSILON && Math.abs(this.getY() - c.getY()) < EPSILON && Math.abs(this.getZ() - c.getZ()) < EPSILON){
+				//postcondition
+				assertNotNull(other);
+				assertCoordinatesLegal(c.getX(), c.getY(), c.getZ());
 				return true;
 			}
 		}
 		else if(other instanceof SphericCoordinate) {
 			c = convertToCartesian((SphericCoordinate) other);
+			//precondition
+			assertCoordinatesLegal(c.getX(), c.getY(), c.getZ());
 			if(Math.abs(this.getX() - c.getX()) < EPSILON && Math.abs(this.getY() - c.getY()) < EPSILON && Math.abs(this.getZ() - c.getZ()) < EPSILON){
+				//postcondition
+				assertNotNull(other);
+				assertCoordinatesLegal(c.getX(), c.getY(), c.getZ());
 				return true;
 			}	
 		}
+		//postcondition
+		assertNotNull(other);
 		return false;
 	}
 	
