@@ -8,19 +8,13 @@ import java.io.Serializable;
 import java.security.InvalidParameterException;
 import java.util.logging.Logger;
 
-import org.wahlzeit.model.Pattern;
 
 /**
  * Abstract super class that offers a convenient interface for all kinds of storage types to store images.
  * 
  * @review
  */
-@Pattern(
-		name = "Singleton",
-		participants = {
-				"Instance"
-			}
-		)
+
 
 public abstract class ImageStorage {
 
