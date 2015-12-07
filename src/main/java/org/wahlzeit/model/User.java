@@ -23,6 +23,7 @@ package org.wahlzeit.model;
 import com.google.appengine.api.images.Image;
 import com.googlecode.objectify.annotation.Ignore;
 import com.googlecode.objectify.annotation.Subclass;
+
 import org.wahlzeit.services.EmailAddress;
 import org.wahlzeit.services.Language;
 import org.wahlzeit.services.LogBuilder;
@@ -40,6 +41,8 @@ import java.util.logging.Logger;
  * Also, his/her contact information and whether the account has been confirmed.
  * Users can have a home page which may be elsewhere on the web.
  */
+
+
 @Subclass(index = true)
 public class User extends Client {
 
