@@ -30,8 +30,8 @@ import java.util.logging.Logger;
 @Pattern (
 		name = "Abstract Factory",
 		participants = {
-				"Abstract Factory",
-				"Concrete Factory"
+				"AbstractFactory",
+				"ConcreteFactory"
 			}
 		)
 
