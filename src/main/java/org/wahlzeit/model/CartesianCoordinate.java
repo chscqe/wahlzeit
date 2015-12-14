@@ -7,7 +7,7 @@ public class CartesianCoordinate extends AbstractCoordinate{
 		list.add(this);
 	}
 	
-	public static CartesianCoordinate getInstance(double x, double y, double z) {
+	public static synchronized CartesianCoordinate getInstance(double x, double y, double z) {
 		for(CartesianCoordinate c : list) {
 			if(c.getX() == x && c.getY() == y && c.getZ() == z) {
 				return c;
