@@ -2,10 +2,20 @@ package org.wahlzeit.model;
 
 public class CartesianCoordinate extends AbstractCoordinate{
 	
-	public CartesianCoordinate(double x, double y, double z) {
+	protected CartesianCoordinate(double x, double y, double z) {
 		super(x, y, z);
+		list.add(this);
 	}
 	
+	public static CartesianCoordinate getInstance(double x, double y, double z) {
+		for(CartesianCoordinate c : list) {
+			if(c.getX() == x && c.getY() == y && c.getZ() == z) {
+				return c;
+			}
+		}
+		CartesianCoordinate c = new CartesianCoordinate(x, y, z);
+		return c;
+	}
 	
 	public double getXDistance(CartesianCoordinate other)	{
 		return Math.abs(this.getX() - other.getX());

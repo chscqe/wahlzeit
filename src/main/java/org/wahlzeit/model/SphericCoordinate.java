@@ -7,11 +7,22 @@ public class SphericCoordinate extends AbstractCoordinate{
 	private double radius;
 	
 	
-	public SphericCoordinate(double latitude, double longitude, double radius) {
+	protected SphericCoordinate(double latitude, double longitude, double radius) {
 		super(radius * Math.cos(latitude) * Math.cos(longitude), radius * Math.cos(latitude) * Math.sin(longitude), radius * Math.sin(latitude));
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.radius = radius;
+		list.add(convertToCartesian(this));
+	}
+	
+	public static CartesianCoordinate getInstance(double x, double y, double z) {
+		for(CartesianCoordinate c : list) {
+			if(c.getX() == x && c.getY() == y && c.getZ() == z) {
+				return c;
+			}
+		}
+		CartesianCoordinate c = new CartesianCoordinate(x, y, z);
+		return c;
 	}
 	
 	public double getLatitudinalDistance(SphericCoordinate other)	{

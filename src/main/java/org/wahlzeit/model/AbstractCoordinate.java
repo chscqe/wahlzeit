@@ -1,16 +1,19 @@
 package org.wahlzeit.model;
 
+import java.util.ArrayList;
+
 public abstract class AbstractCoordinate implements Coordinate {
 
 	
 	private static final double EPSILON = 0.01;
 	
-	private final double x;
-	private final double y;
-	private final double z;
+	private double x;
+	private double y;
+	private double z;
 	
+	protected static ArrayList<CartesianCoordinate> list = new ArrayList<CartesianCoordinate>();
 	
-	public AbstractCoordinate(double x, double y, double z) {
+	protected AbstractCoordinate(double x, double y, double z) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
@@ -26,7 +29,7 @@ public abstract class AbstractCoordinate implements Coordinate {
 		assert (z != Double.NaN);
 	}
 	
-	public double getDistance(Coordinate other) {
+	public synchronized double getDistance(Coordinate other) {
 		//precondition
 		assertNotNull(other);
 		CartesianCoordinate c;
@@ -50,8 +53,8 @@ public abstract class AbstractCoordinate implements Coordinate {
 		return Math.sqrt(distX*distX + distY*distY + distZ*distZ);
 	}
 	
-	@Override
-	public boolean isEqual(Coordinate other) {
+	
+	public synchronized boolean isEqual(Coordinate other) {
 		
 		//precondition
 		assertNotNull(other);
@@ -96,7 +99,7 @@ public abstract class AbstractCoordinate implements Coordinate {
 		return z;
 	}
 	
-	private CartesianCoordinate convertToCartesian(SphericCoordinate s) {
+	protected synchronized static CartesianCoordinate convertToCartesian(SphericCoordinate s) {
 		double cX = s.getRadius() * Math.cos(s.getLatitude()) * Math.cos(s.getLongitude());
 		double cY = s.getRadius() * Math.cos(s.getLatitude()) * Math.sin(s.getLongitude());
 		double cZ = s.getRadius() * Math.sin(s.getLatitude());
