@@ -15,7 +15,7 @@ public class SphericCoordinate extends AbstractCoordinate{
 		list.add(convertToCartesian(this));
 	}
 	
-	public static synchronized CartesianCoordinate getInstance(double x, double y, double z) {
+	public synchronized static CartesianCoordinate getInstance(double x, double y, double z) {
 		for(CartesianCoordinate c : list) {
 			if(c.getX() == x && c.getY() == y && c.getZ() == z) {
 				return c;
